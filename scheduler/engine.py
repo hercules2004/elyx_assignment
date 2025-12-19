@@ -28,15 +28,14 @@ class AdaptiveScheduler:
     """
 
     # Soft Limits: Prevent any single Priority tier from monopolizing the day
-    # (Adapted from Reference's Balanced Strategy)
     PRIORITY_QUOTAS = {
-        1: 0.60, # Critical tasks can take 60% of day
-        2: 0.50,
-        3: 0.30,
-        4: 0.20,
-        5: 0.10
+        1: 1.00, # Critical tasks can take 100% of day
+        2: 0.80,
+        3: 0.60,
+        4: 0.50,
+        5: 0.40
     }
-    MAX_DAILY_SLOTS = 24 # Assuming 12h active day * 2 slots/hr avg
+    MAX_DAILY_SLOTS = 10 # Reduced to ~5-6 hours of active health time per day
 
     def __init__(
         self,
@@ -340,7 +339,8 @@ class AdaptiveScheduler:
                 (9, 0),   # Start of Work
                 (12, 0),  # Lunch
                 (17, 0),  # After Work
-                (19, 0)   # Evening
+                (19, 0),  # Evening
+                (22,0) # Post-Dinner
             ]
             
             for h, m in standard_options:

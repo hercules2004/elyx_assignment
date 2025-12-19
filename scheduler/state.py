@@ -184,7 +184,8 @@ class SchedulerState:
             "specialist_usage_count": {k: len(v) for k, v in self.specialist_bookings.items()},
             "equipment_usage_count": {k: len(v) for k, v in self.equipment_bookings.items()},
             
-            "failed_activities_count": len(self.failed_activities)
+            # Only count activities that had a Terminal Failure (Exhaustion)
+            "failed_activities_count": sum(1 for a in self.failed_activities.values() if any(v.constraint_type == "Exhaustion" for v in a.violations))
         }
 
     def get_failure_report(self) -> List[Dict]:
@@ -195,6 +196,12 @@ class SchedulerState:
         report = []
 
         for activity_id, attempt in self.failed_activities.items():
+            # [FILTER] Only report 'Terminal Failures' (Exhaustion).
+            # If an activity failed initially but was saved by a Backup, 
+            # it will NOT have an 'Exhaustion' error. We skip those to reduce noise.
+            if not any(v.constraint_type == "Exhaustion" for v in attempt.violations):
+                continue
+
             # Aggregate violation reasons (e.g. "Specialist Busy: 50 times")
             violation_summary = defaultdict(int)
             for v in attempt.violations:

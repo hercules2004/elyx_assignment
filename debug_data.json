@@ -2,24 +2,24 @@
   "activities": [
     {
       "id": "act_000_p",
-      "name": "Heavy Lifting Session (Gym)",
+      "name": "Strength Training Session (Gym)",
       "type": "Fitness",
-      "priority": 5,
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
         "count": 3,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 90,
+      "duration_minutes": 60,
       "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
+      "specialist_id": "S101",
       "equipment_ids": [
+        "Dumbbells",
         "Barbell",
-        "Rack",
-        "Plates"
+        "Rack"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -32,50 +32,47 @@
     },
     {
       "id": "act_000_b",
-      "name": "Bodyweight Strength Circuit",
+      "name": "Bodyweight Circuit (Home)",
       "type": "Fitness",
-      "priority": 5,
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
         "count": 3,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 30,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 45,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [],
+      "equipment_ids": [
+        "Mat"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P01"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_001_p",
-      "name": "Complex Meal Prep (Sunday batch)",
-      "type": "Food",
-      "priority": 3,
+      "name": "Cognitive Behavioral Therapy (CBT)",
+      "type": "Therapy",
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 120,
-      "preparation_duration_minutes": 15,
+      "duration_minutes": 50,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Blender",
-        "Oven"
-      ],
+      "specialist_id": "T201",
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -87,17 +84,17 @@
     },
     {
       "id": "act_001_b",
-      "name": "Quick Salad Assembly",
-      "type": "Food",
-      "priority": 3,
+      "name": "Guided Meditation (App)",
+      "type": "Therapy",
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 15,
-      "preparation_duration_minutes": 5,
+      "duration_minutes": 25,
+      "preparation_duration_minutes": 2,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -106,15 +103,13 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P02"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_002_p",
-      "name": "CBT Session (Clinic)",
-      "type": "Therapy",
+      "name": "Sunday Meal Prep (3 hrs)",
+      "type": "Food",
       "priority": 2,
       "frequency": {
         "pattern": "Weekly",
@@ -122,12 +117,15 @@
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 60,
-      "preparation_duration_minutes": 5,
+      "duration_minutes": 90,
+      "preparation_duration_minutes": 15,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_T101",
-      "equipment_ids": [],
+      "specialist_id": null,
+      "equipment_ids": [
+        "Kitchen_Tools",
+        "Oven"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -139,8 +137,8 @@
     },
     {
       "id": "act_002_b",
-      "name": "Guided Deep Breathing Exercise",
-      "type": "Therapy",
+      "name": "Quick Smoothie Prep (1 day)",
+      "type": "Food",
       "priority": 2,
       "frequency": {
         "pattern": "Weekly",
@@ -148,41 +146,38 @@
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P03"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_003_p",
-      "name": "Swim Laps (Pool)",
-      "type": "Fitness",
-      "priority": 4,
-      "frequency": {
-        "pattern": "Daily",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 45,
+      "duration_minutes": 20,
       "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Goggles",
-        "Kickboard"
+        "Blender"
       ],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_003_p",
+      "name": "Pharmacy Refill Pickup",
+      "type": "Medication",
+      "priority": 2,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 40,
+      "preparation_duration_minutes": 10,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -194,49 +189,47 @@
     },
     {
       "id": "act_003_b",
-      "name": "20 Min Yoga Flow (Home Mat)",
-      "type": "Fitness",
-      "priority": 4,
-      "frequency": {
-        "pattern": "Daily",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 20,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Mat"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P04"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_004_p",
-      "name": "Injectable Prescription Pickup",
+      "name": "Automated Pill Sorting (Weekly)",
       "type": "Medication",
-      "priority": 1,
+      "priority": 2,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 30,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 15,
+      "preparation_duration_minutes": 0,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_004_p",
+      "name": "Deep Tissue Massage Appointment",
+      "type": "Fitness",
+      "priority": 4,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 60,
+      "preparation_duration_minutes": 10,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": "M301",
+      "equipment_ids": [
+        "Massage_Table"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -248,49 +241,47 @@
     },
     {
       "id": "act_004_b",
-      "name": "Oral Supplement Intake",
-      "type": "Medication",
-      "priority": 1,
+      "name": "Foam Rolling and Stretching Routine",
+      "type": "Fitness",
+      "priority": 4,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [],
+      "equipment_ids": [
+        "Foam_Roller"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P05"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_005_p",
-      "name": "Spin Class (Studio)",
-      "type": "Fitness",
+      "name": "Annual Physical Exam",
+      "type": "Consultation",
       "priority": 5,
       "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 50,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 55,
+      "preparation_duration_minutes": 15,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_F203",
-      "equipment_ids": [
-        "Spin Bike"
-      ],
+      "specialist_id": "D401",
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -302,47 +293,48 @@
     },
     {
       "id": "act_005_b",
-      "name": "Jumping Jacks & High Knees",
-      "type": "Fitness",
-      "priority": 5,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 15,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P06"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_006_p",
-      "name": "Nutritionist Appointment (Virtual)",
+      "name": "Telehealth Symptom Check",
       "type": "Consultation",
-      "priority": 3,
+      "priority": 5,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 40,
+      "duration_minutes": 20,
       "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_C501",
+      "specialist_id": "D401",
       "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_006_p",
+      "name": "Morning Core Routine (Gym)",
+      "type": "Fitness",
+      "priority": 3,
+      "frequency": {
+        "pattern": "Daily",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 15,
+      "preparation_duration_minutes": 5,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [
+        "Mat",
+        "Cable_Machine"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -354,49 +346,47 @@
     },
     {
       "id": "act_006_b",
-      "name": "Read a Dietary Article",
-      "type": "Consultation",
+      "name": "7 Minute Plank Challenge (Home)",
+      "type": "Fitness",
       "priority": 3,
+      "frequency": {
+        "pattern": "Daily",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 7,
+      "preparation_duration_minutes": 0,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [
+        "Mat"
+      ],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_007_p",
+      "name": "Financial Planning Session",
+      "type": "Other",
+      "priority": 5,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 15,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 45,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
+      "specialist_id": "F501",
       "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P07"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_007_p",
-      "name": "Kettlebell Training",
-      "type": "Fitness",
-      "priority": 2,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 4,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 55,
-      "preparation_duration_minutes": 5,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Kettlebell"
-      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -408,40 +398,36 @@
     },
     {
       "id": "act_007_b",
-      "name": "Resistance Band Workout",
-      "type": "Fitness",
-      "priority": 2,
+      "name": "Budget Review Spreadsheet Update",
+      "type": "Other",
+      "priority": 5,
       "frequency": {
-        "pattern": "Weekly",
-        "count": 4,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
       "duration_minutes": 25,
-      "preparation_duration_minutes": 0,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [
-        "Resistance Bands"
-      ],
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P08"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_008_p",
-      "name": "Prepare Homemade Bone Broth",
+      "name": "Healthy Cooking Class (In Person)",
       "type": "Food",
       "priority": 4,
       "frequency": {
-        "pattern": "Daily",
-        "count": 3,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
@@ -449,9 +435,9 @@
       "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
+      "specialist_id": "C401",
       "equipment_ids": [
-        "Large Pot"
+        "Commercial_Kitchen"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -464,17 +450,17 @@
     },
     {
       "id": "act_008_b",
-      "name": "Drink a Glass of Water + Lemon",
+      "name": "Online Recipe Video Tutorial",
       "type": "Food",
       "priority": 4,
       "frequency": {
-        "pattern": "Daily",
-        "count": 3,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 35,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -483,28 +469,29 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P09"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_009_p",
-      "name": "Couples Counseling (In-Person)",
-      "type": "Therapy",
-      "priority": 5,
+      "name": "Yoga Vinyasa Studio Class",
+      "type": "Fitness",
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
-        "count": 1,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 75,
-      "preparation_duration_minutes": 15,
+      "duration_minutes": 55,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_T102",
-      "equipment_ids": [],
+      "specialist_id": "Y102",
+      "equipment_ids": [
+        "Yoga_Mat",
+        "Blocks"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -516,33 +503,7 @@
     },
     {
       "id": "act_009_b",
-      "name": "15 Min Relationship Journaling",
-      "type": "Therapy",
-      "priority": 5,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 15,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P10"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_010_p",
-      "name": "Pilates Reformer Class",
+      "name": "Gentle At-Home Stretching",
       "type": "Fitness",
       "priority": 1,
       "frequency": {
@@ -551,14 +512,38 @@
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 60,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_F204",
+      "specialist_id": null,
       "equipment_ids": [
-        "Reformer"
+        "Mat"
       ],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_010_p",
+      "name": "Group Support Session",
+      "type": "Therapy",
+      "priority": 2,
+      "frequency": {
+        "pattern": "Weekly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 60,
+      "preparation_duration_minutes": 15,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": "T202",
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -570,45 +555,41 @@
     },
     {
       "id": "act_010_b",
-      "name": "Mat Pilates Stretches",
-      "type": "Fitness",
-      "priority": 1,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 20,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Mat"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P11"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_011_p",
-      "name": "Grocery Shopping (Detailed List)",
-      "type": "Food",
-      "priority": 3,
+      "name": "Journaling and Self-Reflection",
+      "type": "Therapy",
+      "priority": 2,
       "frequency": {
         "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 70,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 0,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_011_p",
+      "name": "Detailed Calorie Logging Review",
+      "type": "Food",
+      "priority": 3,
+      "frequency": {
+        "pattern": "Daily",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 10,
+      "preparation_duration_minutes": 0,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -623,50 +604,23 @@
       "metrics_to_collect": []
     },
     {
-      "id": "act_011_b",
-      "name": "Order Healthy Produce Box",
-      "type": "Food",
+      "id": "act_012_p",
+      "name": "Resistance Band Training (Full Body)",
+      "type": "Fitness",
       "priority": 3,
       "frequency": {
         "pattern": "Weekly",
-        "count": 1,
+        "count": 3,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P12"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_012_p",
-      "name": "Deep Cleaning Home Environment",
-      "type": "Other",
-      "priority": 4,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 120,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 40,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Vacuum",
-        "Mop"
+        "Resistance_Band"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -679,17 +633,17 @@
     },
     {
       "id": "act_012_b",
-      "name": "Tidy Desk and Bed",
-      "type": "Other",
-      "priority": 4,
+      "name": "Plyometrics and Jump Training",
+      "type": "Fitness",
+      "priority": 3,
       "frequency": {
         "pattern": "Weekly",
-        "count": 1,
+        "count": 3,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -698,31 +652,26 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P13"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_013_p",
-      "name": "Rock Climbing (Gym)",
-      "type": "Fitness",
-      "priority": 5,
+      "name": "Dermatologist Appointment (Routine Skin Check)",
+      "type": "Consultation",
+      "priority": 4,
       "frequency": {
-        "pattern": "Weekly",
+        "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 80,
+      "duration_minutes": 30,
       "preparation_duration_minutes": 15,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Harness",
-        "Shoes"
-      ],
+      "specialist_id": "D502",
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -734,11 +683,11 @@
     },
     {
       "id": "act_013_b",
-      "name": "Plank and Core Holds",
-      "type": "Fitness",
-      "priority": 5,
+      "name": "Self-Assessment Skin Check",
+      "type": "Consultation",
+      "priority": 4,
       "frequency": {
-        "pattern": "Weekly",
+        "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
@@ -753,23 +702,21 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P14"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_014_p",
-      "name": "Specialty Pharmacy Refill",
-      "type": "Medication",
-      "priority": 2,
+      "name": "Digital Detox Planning Session",
+      "type": "Other",
+      "priority": 1,
       "frequency": {
-        "pattern": "Monthly",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 45,
+      "duration_minutes": 30,
       "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
@@ -786,16 +733,16 @@
     },
     {
       "id": "act_014_b",
-      "name": "Basic Daily Vitamin Intake",
-      "type": "Medication",
-      "priority": 2,
+      "name": "Hourly Phone Lockbox Usage",
+      "type": "Other",
+      "priority": 1,
       "frequency": {
-        "pattern": "Monthly",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
+      "duration_minutes": 15,
       "preparation_duration_minutes": 0,
       "time_window_start": null,
       "time_window_end": null,
@@ -805,29 +752,27 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P15"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_015_p",
-      "name": "Juicing Routine (Centrifugal Juicer)",
-      "type": "Food",
-      "priority": 1,
+      "name": "90 Minute Spin Class",
+      "type": "Fitness",
+      "priority": 2,
       "frequency": {
-        "pattern": "Daily",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 25,
-      "preparation_duration_minutes": 5,
+      "duration_minutes": 90,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Juicer"
+        "Spin_Bike"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -840,51 +785,45 @@
     },
     {
       "id": "act_015_b",
-      "name": "Prepare Fruit Smoothie",
-      "type": "Food",
-      "priority": 1,
+      "name": "High Knees and Shadow Boxing",
+      "type": "Fitness",
+      "priority": 2,
       "frequency": {
-        "pattern": "Daily",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 15,
+      "duration_minutes": 40,
       "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [
-        "Portable Blender"
-      ],
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P16"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_016_p",
-      "name": "Stairmaster Interval Training",
-      "type": "Fitness",
+      "name": "Farmers Market Trip for Fresh Produce",
+      "type": "Food",
       "priority": 3,
       "frequency": {
-        "pattern": "Daily",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 35,
-      "preparation_duration_minutes": 5,
+      "duration_minutes": 50,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [
-        "Stairmaster"
-      ],
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -896,46 +835,46 @@
     },
     {
       "id": "act_016_b",
-      "name": "Walk rapidly around the block",
-      "type": "Fitness",
+      "name": "Online Grocery Order Placement",
+      "type": "Food",
       "priority": 3,
       "frequency": {
-        "pattern": "Daily",
+        "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
       "duration_minutes": 20,
-      "preparation_duration_minutes": 0,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [],
+      "equipment_ids": [
+        "Computer"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P17"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_017_p",
-      "name": "Dermatologist Checkup",
-      "type": "Consultation",
+      "name": "Couples Therapy Session",
+      "type": "Therapy",
       "priority": 4,
       "frequency": {
         "pattern": "Monthly",
-        "count": 1,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
       "duration_minutes": 60,
-      "preparation_duration_minutes": 15,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_C502",
+      "specialist_id": "T403",
       "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
@@ -948,9 +887,59 @@
     },
     {
       "id": "act_017_b",
-      "name": "Research Sunscreen Options",
-      "type": "Consultation",
+      "name": "Active Listening Practice (Partner)",
+      "type": "Therapy",
       "priority": 4,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 2,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 0,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_018_p",
+      "name": "Sleep Specialist Follow-up",
+      "type": "Consultation",
+      "priority": 5,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 40,
+      "preparation_duration_minutes": 10,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": "S503",
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [
+        "act_018_b"
+      ],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_018_b",
+      "name": "Sleep Diary Update",
+      "type": "Consultation",
+      "priority": 5,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
@@ -967,19 +956,17 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P18"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
-      "id": "act_018_p",
-      "name": "Outdoor Trail Run",
+      "id": "act_019_p",
+      "name": "Pilates Reformer Class",
       "type": "Fitness",
-      "priority": 2,
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
-        "count": 3,
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
@@ -989,62 +976,7 @@
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Running Shoes"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "act_018_b"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_018_b",
-      "name": "10 Min Meditation Walk",
-      "type": "Fitness",
-      "priority": 2,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 3,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P19"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_019_p",
-      "name": "Fermentation Project Start (Kombucha)",
-      "type": "Food",
-      "priority": 5,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 110,
-      "preparation_duration_minutes": 20,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Jars",
-        "SCOBY"
+        "Reformer_Machine"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -1057,17 +989,17 @@
     },
     {
       "id": "act_019_b",
-      "name": "Eat Probiotic Yogurt",
-      "type": "Food",
-      "priority": 5,
+      "name": "Wall-assisted Mobility Drills",
+      "type": "Fitness",
+      "priority": 1,
       "frequency": {
         "pattern": "Weekly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 35,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -1076,27 +1008,25 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P20"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_020_p",
-      "name": "Massage Therapy Appointment",
-      "type": "Therapy",
-      "priority": 1,
+      "name": "Prescription Renewal Call",
+      "type": "Medication",
+      "priority": 2,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 60,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 25,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_T103",
+      "specialist_id": "D204",
       "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
@@ -1109,69 +1039,12 @@
     },
     {
       "id": "act_020_b",
-      "name": "Use Foam Roller on Tight Muscles",
-      "type": "Therapy",
-      "priority": 1,
+      "name": "Side Effect Tracking Update",
+      "type": "Medication",
+      "priority": 2,
       "frequency": {
         "pattern": "Monthly",
         "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 20,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Foam Roller"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P21"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_021_p",
-      "name": "Boxing Heavy Bag Drill",
-      "type": "Fitness",
-      "priority": 4,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 40,
-      "preparation_duration_minutes": 5,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Heavy Bag",
-        "Gloves"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "act_021_b"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_021_b",
-      "name": "Shadow Boxing Routine",
-      "type": "Fitness",
-      "priority": 4,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
@@ -1185,69 +1058,39 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P22"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
-      "id": "act_022_p",
-      "name": "Portion Control Planning (Weighing food)",
+      "id": "act_021_p",
+      "name": "Nutritional Counseling Session",
       "type": "Food",
-      "priority": 2,
+      "priority": 3,
       "frequency": {
-        "pattern": "Daily",
+        "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 20,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 60,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [
-        "Food Scale"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "act_022_b"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_022_b",
-      "name": "Use Smaller Plates",
-      "type": "Food",
-      "priority": 2,
-      "frequency": {
-        "pattern": "Daily",
-        "count": 1,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
+      "specialist_id": "N305",
       "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
       "backup_activity_ids": [
-        "P23"
+        "act_021_b"
       ],
       "metrics_to_collect": []
     },
     {
-      "id": "act_023_p",
-      "name": "Immunization Booster Shot (Clinic)",
-      "type": "Medication",
+      "id": "act_021_b",
+      "name": "Recipe Library Research",
+      "type": "Food",
       "priority": 3,
       "frequency": {
         "pattern": "Monthly",
@@ -1265,6 +1108,82 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_022_p",
+      "name": "Deep Cleaning and Decluttering (Wellness Space)",
+      "type": "Other",
+      "priority": 4,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 50,
+      "preparation_duration_minutes": 5,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [
+        "Cleaning_Supplies"
+      ],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [
+        "act_022_b"
+      ],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_022_b",
+      "name": "Tidy Up Desk Area (15 minutes)",
+      "type": "Other",
+      "priority": 4,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 15,
+      "preparation_duration_minutes": 0,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_023_p",
+      "name": "Stress Management Workshop",
+      "type": "Therapy",
+      "priority": 5,
+      "frequency": {
+        "pattern": "Monthly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 90,
+      "preparation_duration_minutes": 10,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": "T506",
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
       "backup_activity_ids": [
         "act_023_b"
       ],
@@ -1272,11 +1191,11 @@
     },
     {
       "id": "act_023_b",
-      "name": "Review Medication Schedule",
-      "type": "Medication",
-      "priority": 3,
+      "name": "10 Minutes of Deep Breathing Exercises",
+      "type": "Therapy",
+      "priority": 5,
       "frequency": {
-        "pattern": "Monthly",
+        "pattern": "Daily",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
@@ -1291,71 +1210,14 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P24"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_024_p",
-      "name": "Powerlifting Meet Prep Session",
+      "name": "Kettlebell Training Session",
       "type": "Fitness",
       "priority": 1,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 3,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 120,
-      "preparation_duration_minutes": 15,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": "SP_F205",
-      "equipment_ids": [
-        "Deadlift Platform",
-        "Safety Squat Bar"
-      ],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "act_024_b"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_024_b",
-      "name": "Dynamic Stretching Routine",
-      "type": "Fitness",
-      "priority": 1,
-      "frequency": {
-        "pattern": "Weekly",
-        "count": 3,
-        "preferred_days": null,
-        "interval_days": null
-      },
-      "duration_minutes": 15,
-      "preparation_duration_minutes": 0,
-      "time_window_start": null,
-      "time_window_end": null,
-      "specialist_id": null,
-      "equipment_ids": [],
-      "location": "Any",
-      "remote_capable": false,
-      "details": "",
-      "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P25"
-      ],
-      "metrics_to_collect": []
-    },
-    {
-      "id": "act_025_p",
-      "name": "Indoor Rowing Machine Workout",
-      "type": "Fitness",
-      "priority": 5,
       "frequency": {
         "pattern": "Weekly",
         "count": 2,
@@ -1368,8 +1230,58 @@
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Rower"
+        "Kettlebell"
       ],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [
+        "act_024_b"
+      ],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_024_b",
+      "name": "Shadow Boxing Drill (High Intensity)",
+      "type": "Fitness",
+      "priority": 1,
+      "frequency": {
+        "pattern": "Weekly",
+        "count": 2,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 35,
+      "preparation_duration_minutes": 5,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
+      "location": "Any",
+      "remote_capable": false,
+      "details": "",
+      "preparation_requirements": [],
+      "backup_activity_ids": [],
+      "metrics_to_collect": []
+    },
+    {
+      "id": "act_025_p",
+      "name": "Food Diary Review with Accountability Partner",
+      "type": "Food",
+      "priority": 2,
+      "frequency": {
+        "pattern": "Weekly",
+        "count": 1,
+        "preferred_days": null,
+        "interval_days": null
+      },
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 5,
+      "time_window_start": null,
+      "time_window_end": null,
+      "specialist_id": null,
+      "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
       "details": "",
@@ -1381,17 +1293,17 @@
     },
     {
       "id": "act_025_b",
-      "name": "Chair Squats and Pushups",
-      "type": "Fitness",
-      "priority": 5,
+      "name": "Prep Fruit/Veggie Snacks for the Day",
+      "type": "Food",
+      "priority": 2,
       "frequency": {
         "pattern": "Weekly",
-        "count": 2,
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
       "duration_minutes": 15,
-      "preparation_duration_minutes": 0,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -1400,27 +1312,25 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P26"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_026_p",
-      "name": "Group Support Session (Zoom)",
-      "type": "Therapy",
-      "priority": 4,
+      "name": "Dental Cleaning Appointment",
+      "type": "Consultation",
+      "priority": 5,
       "frequency": {
-        "pattern": "Weekly",
+        "pattern": "Monthly",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 70,
-      "preparation_duration_minutes": 5,
+      "duration_minutes": 45,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_T104",
+      "specialist_id": "D307",
       "equipment_ids": [],
       "location": "Any",
       "remote_capable": false,
@@ -1433,11 +1343,11 @@
     },
     {
       "id": "act_026_b",
-      "name": "Write 3 Gratitude Statements",
-      "type": "Therapy",
-      "priority": 4,
+      "name": "Flossing and Gum Massage Practice",
+      "type": "Consultation",
+      "priority": 5,
       "frequency": {
-        "pattern": "Weekly",
+        "pattern": "Daily",
         "count": 1,
         "preferred_days": null,
         "interval_days": null
@@ -1452,29 +1362,27 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P27"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_027_p",
-      "name": "Barre Class (Studio)",
-      "type": "Fitness",
-      "priority": 3,
+      "name": "Attend Local Craft Workshop",
+      "type": "Other",
+      "priority": 4,
       "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 65,
-      "preparation_duration_minutes": 10,
+      "duration_minutes": 60,
+      "preparation_duration_minutes": 15,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": "SP_F206",
+      "specialist_id": null,
       "equipment_ids": [
-        "Barre"
+        "Workshop_Materials"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -1487,17 +1395,17 @@
     },
     {
       "id": "act_027_b",
-      "name": "Wall Sits and Calf Raises",
-      "type": "Fitness",
-      "priority": 3,
+      "name": "30 Minutes of Creative Drawing",
+      "type": "Other",
+      "priority": 4,
       "frequency": {
-        "pattern": "Weekly",
-        "count": 2,
+        "pattern": "Monthly",
+        "count": 1,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 30,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -1506,30 +1414,28 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P28"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_028_p",
-      "name": "Prepare Artisan Bread (Requires Proofing)",
-      "type": "Food",
-      "priority": 4,
+      "name": "Pool Swimming Session (Laps)",
+      "type": "Fitness",
+      "priority": 5,
       "frequency": {
         "pattern": "Weekly",
-        "count": 1,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 100,
-      "preparation_duration_minutes": 20,
+      "duration_minutes": 60,
+      "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
       "equipment_ids": [
-        "Mixer",
-        "Proofing Basket"
+        "Swim_Goggles",
+        "Pool"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -1542,17 +1448,17 @@
     },
     {
       "id": "act_028_b",
-      "name": "Toast Whole Grain Bread",
-      "type": "Food",
-      "priority": 4,
+      "name": "Water Bottle Resistance Workout (Home)",
+      "type": "Fitness",
+      "priority": 5,
       "frequency": {
         "pattern": "Weekly",
-        "count": 1,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 10,
-      "preparation_duration_minutes": 0,
+      "duration_minutes": 40,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
@@ -1561,30 +1467,27 @@
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P29"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     },
     {
       "id": "act_029_p",
-      "name": "Full Body Circuit (Machine Based)",
-      "type": "Fitness",
-      "priority": 1,
+      "name": "Physical Therapy Session (Clinic)",
+      "type": "Therapy",
+      "priority": 3,
       "frequency": {
         "pattern": "Weekly",
-        "count": 4,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
-      "duration_minutes": 85,
+      "duration_minutes": 45,
       "preparation_duration_minutes": 10,
       "time_window_start": null,
       "time_window_end": null,
-      "specialist_id": null,
+      "specialist_id": "P308",
       "equipment_ids": [
-        "Cable Machine",
-        "Leg Press"
+        "Rehab_Equipment"
       ],
       "location": "Any",
       "remote_capable": false,
@@ -1597,34 +1500,34 @@
     },
     {
       "id": "act_029_b",
-      "name": "Simple Calisthenics Routine",
-      "type": "Fitness",
-      "priority": 1,
+      "name": "Assigned PT Home Exercises",
+      "type": "Therapy",
+      "priority": 3,
       "frequency": {
         "pattern": "Weekly",
-        "count": 4,
+        "count": 2,
         "preferred_days": null,
         "interval_days": null
       },
       "duration_minutes": 25,
-      "preparation_duration_minutes": 0,
+      "preparation_duration_minutes": 5,
       "time_window_start": null,
       "time_window_end": null,
       "specialist_id": null,
-      "equipment_ids": [],
+      "equipment_ids": [
+        "Resistance_Band"
+      ],
       "location": "Any",
       "remote_capable": false,
       "details": "",
       "preparation_requirements": [],
-      "backup_activity_ids": [
-        "P30"
-      ],
+      "backup_activity_ids": [],
       "metrics_to_collect": []
     }
   ],
   "specialists": [
     {
-      "id": "S001",
+      "id": "P001",
       "name": "Dr. Eleanor Vance",
       "type": "Physician",
       "availability": [
@@ -1645,201 +1548,180 @@
         }
       ],
       "days_off": [
-        "2025-11-28",
-        "2025-12-25"
+        "2024-11-28",
+        "2024-12-24"
       ],
       "max_concurrent_clients": 1
     },
     {
-      "id": "S002",
-      "name": "Sarah Chen, RD",
+      "id": "D002",
+      "name": "Sarah Jenkins",
       "type": "Dietitian",
       "availability": [
         {
           "day_of_week": 2,
-          "start_time": "10:00:00",
-          "end_time": "18:00:00"
-        },
-        {
-          "day_of_week": 4,
-          "start_time": "10:00:00",
-          "end_time": "18:00:00"
-        },
-        {
-          "day_of_week": 6,
-          "start_time": "09:00:00",
-          "end_time": "13:00:00"
-        }
-      ],
-      "days_off": [],
-      "max_concurrent_clients": 3
-    },
-    {
-      "id": "S003",
-      "name": "Markus Klein, LCSW",
-      "type": "Therapist",
-      "availability": [
-        {
-          "day_of_week": 1,
-          "start_time": "12:00:00",
-          "end_time": "20:00:00"
-        },
-        {
-          "day_of_week": 2,
-          "start_time": "12:00:00",
-          "end_time": "20:00:00"
-        },
-        {
-          "day_of_week": 3,
-          "start_time": "12:00:00",
-          "end_time": "20:00:00"
-        },
-        {
-          "day_of_week": 4,
-          "start_time": "12:00:00",
-          "end_time": "20:00:00"
-        }
-      ],
-      "days_off": [
-        "2025-12-24",
-        "2025-12-31"
-      ],
-      "max_concurrent_clients": 1
-    },
-    {
-      "id": "S004",
-      "name": "Alex Rodriguez",
-      "type": "Trainer",
-      "availability": [
-        {
-          "day_of_week": 1,
-          "start_time": "06:00:00",
-          "end_time": "10:00:00"
-        },
-        {
-          "day_of_week": 1,
-          "start_time": "16:00:00",
-          "end_time": "20:00:00"
-        },
-        {
-          "day_of_week": 3,
-          "start_time": "06:00:00",
-          "end_time": "10:00:00"
-        },
-        {
-          "day_of_week": 3,
-          "start_time": "16:00:00",
-          "end_time": "20:00:00"
-        },
-        {
-          "day_of_week": 5,
-          "start_time": "06:00:00",
-          "end_time": "10:00:00"
-        },
-        {
-          "day_of_week": 5,
-          "start_time": "16:00:00",
-          "end_time": "20:00:00"
-        }
-      ],
-      "days_off": [
-        "2026-01-01"
-      ],
-      "max_concurrent_clients": 5
-    },
-    {
-      "id": "S005",
-      "name": "Jamie Lee, RT",
-      "type": "Allied_Health",
-      "availability": [
-        {
-          "day_of_week": 0,
           "start_time": "08:00:00",
           "end_time": "16:00:00"
         },
         {
-          "day_of_week": 1,
-          "start_time": "08:00:00",
-          "end_time": "16:00:00"
-        },
-        {
-          "day_of_week": 2,
+          "day_of_week": 4,
           "start_time": "08:00:00",
           "end_time": "16:00:00"
         }
       ],
       "days_off": [],
       "max_concurrent_clients": 2
+    },
+    {
+      "id": "T003",
+      "name": "Michael Reed",
+      "type": "Therapist",
+      "availability": [
+        {
+          "day_of_week": 1,
+          "start_time": "10:00:00",
+          "end_time": "18:00:00"
+        },
+        {
+          "day_of_week": 2,
+          "start_time": "10:00:00",
+          "end_time": "18:00:00"
+        },
+        {
+          "day_of_week": 3,
+          "start_time": "10:00:00",
+          "end_time": "18:00:00"
+        },
+        {
+          "day_of_week": 4,
+          "start_time": "10:00:00",
+          "end_time": "18:00:00"
+        }
+      ],
+      "days_off": [
+        "2024-12-25",
+        "2025-01-01"
+      ],
+      "max_concurrent_clients": 1
+    },
+    {
+      "id": "TR004",
+      "name": "Alex Johnson",
+      "type": "Trainer",
+      "availability": [
+        {
+          "day_of_week": 0,
+          "start_time": "07:00:00",
+          "end_time": "12:00:00"
+        },
+        {
+          "day_of_week": 6,
+          "start_time": "07:00:00",
+          "end_time": "12:00:00"
+        }
+      ],
+      "days_off": [],
+      "max_concurrent_clients": 5
+    },
+    {
+      "id": "A005",
+      "name": "Jenna Hayes",
+      "type": "Allied_Health",
+      "availability": [
+        {
+          "day_of_week": 1,
+          "start_time": "12:00:00",
+          "end_time": "20:00:00"
+        },
+        {
+          "day_of_week": 2,
+          "start_time": "12:00:00",
+          "end_time": "20:00:00"
+        },
+        {
+          "day_of_week": 3,
+          "start_time": "12:00:00",
+          "end_time": "20:00:00"
+        },
+        {
+          "day_of_week": 4,
+          "start_time": "12:00:00",
+          "end_time": "20:00:00"
+        },
+        {
+          "day_of_week": 5,
+          "start_time": "12:00:00",
+          "end_time": "20:00:00"
+        }
+      ],
+      "days_off": [
+        "2024-10-31"
+      ],
+      "max_concurrent_clients": 3
     }
   ],
   "equipment": [
     {
       "id": "E001",
-      "name": "Primary Data Server Rack 3A",
-      "location": "Data Center Floor 2",
+      "name": "Quantum Processing Unit",
+      "location": "Data Center A, Rack 3B",
       "is_portable": false,
       "maintenance_windows": [
         {
-          "start_date": "2024-07-15",
-          "end_date": "2024-07-15",
+          "start_date": "2024-02-05",
+          "end_date": "2024-02-07",
           "start_time": null,
           "end_time": null
         },
         {
-          "start_date": "2024-10-20",
-          "end_date": "2024-10-21",
+          "start_date": "2024-05-20",
+          "end_date": "2024-05-21",
           "start_time": null,
           "end_time": null
         }
       ],
-      "max_concurrent_users": 500,
+      "max_concurrent_users": 100,
       "requires_specialist": false
     },
     {
       "id": "E002",
-      "name": "Industrial Resin Printer V2",
-      "location": "R&D Lab 105",
-      "is_portable": false,
-      "maintenance_windows": [
-        {
-          "start_date": "2024-06-20",
-          "end_date": "2024-06-20",
-          "start_time": null,
-          "end_time": null
-        },
-        {
-          "start_date": "2024-09-01",
-          "end_date": "2024-09-03",
-          "start_time": null,
-          "end_time": null
-        }
-      ],
+      "name": "Standard Employee Laptop (Model X)",
+      "location": "Inventory Storage, Shelf 4",
+      "is_portable": true,
+      "maintenance_windows": [],
       "max_concurrent_users": 1,
       "requires_specialist": false
     },
     {
       "id": "E003",
-      "name": "Conference Room Projector X500",
-      "location": "Meeting Room A",
-      "is_portable": true,
-      "maintenance_windows": [],
-      "max_concurrent_users": 30,
-      "requires_specialist": false
-    },
-    {
-      "id": "E004",
-      "name": "Fiber Optic Tester Kit",
-      "location": "Storage Closet B",
-      "is_portable": true,
+      "name": "Industrial Resin Printer V2",
+      "location": "R&D Lab 101",
+      "is_portable": false,
       "maintenance_windows": [
         {
-          "start_date": "2025-01-10",
-          "end_date": "2025-01-12",
+          "start_date": "2024-03-15",
+          "end_date": "2024-03-15",
           "start_time": null,
           "end_time": null
         }
       ],
-      "max_concurrent_users": 1,
+      "max_concurrent_users": 2,
+      "requires_specialist": false
+    },
+    {
+      "id": "E004",
+      "name": "Ultra-HD Conference Cam",
+      "location": "Meeting Room C",
+      "is_portable": true,
+      "maintenance_windows": [
+        {
+          "start_date": "2024-04-01",
+          "end_date": "2024-04-01",
+          "start_time": null,
+          "end_time": null
+        }
+      ],
+      "max_concurrent_users": 15,
       "requires_specialist": false
     }
   ],
@@ -1849,18 +1731,18 @@
       "start_date": "2025-12-19",
       "end_date": "2025-12-26",
       "location": "Hotel/Resort",
-      "remote_activities_only": true,
+      "remote_activities_only": false,
       "available_equipment_ids": [
         "E001",
-        "E003"
+        "E004"
       ]
     },
     {
       "id": "T002",
       "start_date": "2025-12-27",
       "end_date": "2026-01-05",
-      "location": "Coastal City",
-      "remote_activities_only": false,
+      "location": "Mountain Cabin",
+      "remote_activities_only": true,
       "available_equipment_ids": []
     }
   ]

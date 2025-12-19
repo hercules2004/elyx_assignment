@@ -128,9 +128,9 @@ class DataGenerator:
            ["Daily", "Weekly", "Monthly"]
            
         4. DURATION RULES:
-           - "duration_minutes": Must be an INTEGER between 10 and 120.
-           - NEVER use 0, 1, 2, or 5 minutes. Minimum is 10.
-           - "preparation_duration_minutes": Integer between 0 and 30.
+           - "duration_minutes": Must be an INTEGER between 15 and 60. (Only 10% can be up to 90).
+           - "preparation_duration_minutes": Integer between 0 and 15.
+           - KEEP IT SHORT: We are scheduling a busy human, not a robot. Prefer 30-45 min sessions.
 
         5. REQUIRED FIELDS:
            - "id" (string)
@@ -148,6 +148,9 @@ class DataGenerator:
            - "primary": High commitment (Gym, Specialist).
            - "backup": Low friction (Home, No Equipment). MUST be 100% Equipment-Free or use only "Portable" items (e.g. Bands, Mat).
            - PRIORITY DISTRIBUTION: You MUST generate a mix of Priorities 1, 2, 3, 4, and 5. Do not default everyone to 3 or 4.
+           - FREQUENCY BALANCE: Avoid overloading the schedule. 
+             - Prefer "Weekly" (1-3 times) over "Daily".
+             - If "Daily", duration MUST be under 20 minutes.
         """
         
         logger.info(f"🚀 Launching 'Big Bang' request for {count} activity pairs...")
