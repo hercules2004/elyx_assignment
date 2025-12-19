@@ -254,29 +254,13 @@ class ConstraintChecker:
         """Basic check if activity fits in its preferred window."""
         if start < activity.time_window_start:
              return ConstraintViolation("TimeWindow", "Too early", activity.id, date, start)
-        """
-        Check if activity fits in its preferred window.
-        [ADAPTIVE UPDATE]: Includes a 60-minute 'Soft Buffer' to allow flexibility.
-        """
-        # Convert to minutes for easy comparison
-        start_min = start.hour * 60 + start.minute
-        win_start_min = activity.time_window_start.hour * 60 + activity.time_window_start.minute
-        win_end_min = activity.time_window_end.hour * 60 + activity.time_window_end.minute
         
         # End time check
         end_min = start.hour*60 + start.minute + activity.duration_minutes
         win_end_min = activity.time_window_end.hour*60 + activity.time_window_end.minute
-        # Check Start (Allow 60 min early)
-        if start_min < (win_start_min - 60):
-             return ConstraintViolation("TimeWindow", "Too early (exceeds 60m buffer)", activity.id, date, start)
         
         if end_min > win_end_min:
             return ConstraintViolation("TimeWindow", "Too late", activity.id, date, start)
-        # Check End (Allow 60 min late)
-        act_end_min = start_min + activity.duration_minutes
-        if act_end_min > (win_end_min + 60):
-            return ConstraintViolation("TimeWindow", "Too late (exceeds 60m buffer)", activity.id, date, start)
-            
         return None
 
     def _get_active_travel(self, date: date_type) -> Optional[TravelPeriod]:

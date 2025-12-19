@@ -90,7 +90,7 @@ class AdaptiveScheduler:
 
             # Attempt 3: Liquid Scheduling (Primary Activity - Any Day in Week)
             # If rigid slots failed, try to fit the Primary anywhere in the week to meet quota.
-            if not success and activity.frequency.pattern == FrequencyPattern.WEEKLY:
+            if not success and activity.frequency.pattern in [FrequencyPattern.WEEKLY, FrequencyPattern.MONTHLY]:
                 success = self._attempt_placement(activity, occ['index_in_sequence'], scope="wide")
 
             if not success:
@@ -232,18 +232,31 @@ class AdaptiveScheduler:
         freq = activity.frequency
         candidates = []
 
-        # LIQUID SCHEDULING: Wide Scope for Weekly activities
-        if scope == "wide" and freq.pattern == FrequencyPattern.WEEKLY:
-            week_num = index // freq.count
-            # Start of the 7-day block
-            week_start = self.start_date + timedelta(weeks=week_num)
+        # LIQUID SCHEDULING: Wide Scope
+        if scope == "wide":
+            if freq.pattern == FrequencyPattern.WEEKLY:
+                week_num = index // freq.count
+                # Start of the 7-day block
+                week_start = self.start_date + timedelta(weeks=week_num)
+                
+                # Try all 7 days in the block
+                for d in range(7):
+                    day = week_start + timedelta(days=d)
+                    if self.start_date <= day <= self.end_date:
+                        candidates.extend(self._generate_times_for_date(activity, day))
+                return candidates
             
-            # Try all 7 days in the block
-            for d in range(7):
-                day = week_start + timedelta(days=d)
-                if self.start_date <= day <= self.end_date:
-                    candidates.extend(self._generate_times_for_date(activity, day))
-            return candidates
+            elif freq.pattern == FrequencyPattern.MONTHLY:
+                # Monthly Liquid: Try a 7-day window starting from the target date
+                # This prevents "1st of the month" congestion from killing the task
+                month_num = index // freq.count
+                base_date = self.start_date + timedelta(days=30 * month_num)
+                
+                for d in range(7):
+                    day = base_date + timedelta(days=d)
+                    if self.start_date <= day <= self.end_date:
+                        candidates.extend(self._generate_times_for_date(activity, day))
+                return candidates
         
         # --- Step 1: Identify the Target Date ---
         target_date = None
