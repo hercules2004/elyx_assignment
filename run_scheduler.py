@@ -27,6 +27,7 @@ logger = logging.getLogger("Main")
 # --- CONFIGURATION ---
 CACHE_FILENAME = "debug_data.json"
 USE_CACHE = True  # Set to False to force new AI generation
+API_KEY = "AIzaSyCvP2eBHpmE_BHh3q9rnQ8daIbWjTsPgv4" 
 # ---------------------
 
 def save_debug_data(data: dict, filename: str):
