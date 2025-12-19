@@ -25,6 +25,7 @@ class TimeSlot(BaseModel):
 
     # --- Core Scheduling Data ---
     activity_id: str = Field(description="ID of the activity effectively scheduled")
+    priority: int = Field(description="Priority level of the activity (1-5)")
     date: date_type = Field(description="Calendar date")
     start_time: time_type = Field(description="Start time of the ACTIVITY ITSELF")
     duration_minutes: int = Field(ge=5, le=480, description="Duration of the activity")
@@ -68,6 +69,7 @@ class TimeSlot(BaseModel):
     model_config = ConfigDict(json_schema_extra={
         "example": {
             "activity_id": "act_home_workout_01",
+            "priority": 2,
             "date": "2025-01-15",
             "start_time": "07:30:00",
             "duration_minutes": 30,
