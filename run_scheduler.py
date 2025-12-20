@@ -6,7 +6,7 @@ UPDATED: Fixes "Primary vs Backup Clash" by segregating lists before scheduling.
 import os
 import sys
 import logging
-from datetime import date
+from datetime import date, timedelta
 import json
 
 # Add current directory to path so imports work
@@ -18,7 +18,7 @@ from models import Activity, Specialist, Equipment, TravelPeriod
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.StreamHandler()]
 )
@@ -71,6 +71,83 @@ def load_cached_data(filename: str):
     except Exception as e:
         logger.error(f"❌ Failed to load cache: {e}")
         return None, None
+
+def export_dashboard_data(state, activities_map, travel_periods, filename="dashboard_data.json"):
+    """
+    Serializes the scheduler state into a JSON format for the frontend.
+    """
+    logger.info(f"💾 Exporting dashboard data to {filename}...")
+    
+    data = {
+        "activities": {},
+        "schedule": {},
+        "context": {},
+        "failures": {}
+    }
+
+    # 1. Activities Map
+    for aid, act in activities_map.items():
+        data["activities"][aid] = act.model_dump(mode='json')
+
+    # 2. Schedule (Grouped by Date)
+    for slot in state.booked_slots:
+        date_key = slot.date.isoformat()
+        if date_key not in data["schedule"]:
+            data["schedule"][date_key] = []
+        data["schedule"][date_key].append(slot.model_dump(mode='json'))
+
+    # 3. Context (Travel & Load)
+    if state.booked_slots:
+        dates = sorted(list(set(s.date for s in state.booked_slots)))
+        start_date = dates[0]
+        end_date = dates[-1]
+        
+        current = start_date
+        while current <= end_date:
+            date_key = current.isoformat()
+            
+            # Context: Travel
+            is_traveling = False
+            location = "Home"
+            for trip in travel_periods:
+                if trip.start_date <= current <= trip.end_date:
+                    is_traveling = True
+                    location = trip.location
+                    break
+            
+            # Context: Load
+            day_slots = [s for s in state.booked_slots if s.date == current]
+            count = len(day_slots)
+            if count == 0: load = "Rest"
+            elif count <= 3: load = "Low"
+            elif count <= 6: load = "Medium"
+            else: load = "High"
+
+            data["context"][date_key] = {
+                "date": date_key,
+                "is_traveling": is_traveling,
+                "location_type": location,
+                "load_intensity": load
+            }
+            
+            current += timedelta(days=1)
+
+    # 4. Failures (Grouped by Date)
+    for aid, attempt in state.failed_activities.items():
+        for v in attempt.violations:
+            d_key = v.date.isoformat()
+            if d_key not in data["failures"]:
+                data["failures"][d_key] = []
+            
+            data["failures"][d_key].append({
+                "activity_id": aid,
+                "reason": v.reason,
+                "type": v.constraint_type
+            })
+
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=2)
+    logger.info("✅ Dashboard data exported.")
 
 def main():
     if not API_KEY and not USE_CACHE:
@@ -162,6 +239,14 @@ def main():
         for fail in report: 
             print(f"❌ [P{fail['priority']}] {fail['activity_name']}")
             print(f"   Reason: {fail['latest_reason']}")
+
+    # --- PHASE 4: EXPORT FOR FRONTEND ---
+    # Combine all activities for lookup
+    all_activities = {a.id: a for a in primary_queue}
+    all_activities.update(backup_reserve)
+    
+    # Export
+    export_dashboard_data(final_state, all_activities, resources['travel'], "health-dashboard-ui/public/dashboard_data.json")
 
     print("\n✅ Integration Test Complete.")
 

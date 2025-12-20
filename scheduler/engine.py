@@ -112,6 +112,15 @@ class AdaptiveScheduler:
         # 1. Generate Candidates (Days/Times)
         candidates = self._generate_candidates(activity, occ_index, scope)
         
+        # [DEBUG FILTER] Only log for March 14th to reduce clutter
+        should_log = any(d.month == 3 and d.day == 14 for d, _ in candidates)
+
+        if should_log:
+            logger.debug(
+                f"Attempting placement for '{activity.name}' (Backup: {is_backup}, Scope: {scope}). "
+                f"Generated {len(candidates)} candidate slots."
+            )
+        
         valid_slots = []
         for date, time in candidates:
             # A. Check Quota (Skip if day is too full of this priority type)
@@ -119,24 +128,37 @@ class AdaptiveScheduler:
             if not is_backup and not self._check_quota(date, activity.priority):
                 continue
             
+            if should_log:
+                logger.debug(f"  - Checking candidate: {date} at {time}")
+
             # B. Check Hard Constraints
             violation = self.checker.check_time_slot(activity, date, time, self.state.booked_slots, is_backup=is_backup)
             
             if violation is None:
                 # C. Score Soft Constraints
                 score = self.scorer.calculate_score(activity, date, time, self.state.booked_slots)
+                if should_log:
+                    logger.debug(f"    ✅ VALID. Score: {score:.2f}")
                 valid_slots.append((score, date, time))
             else:
+                if should_log:
+                    logger.debug(f"    ❌ INVALID. Reason: {violation.constraint_type} - {violation.reason}")
                 # Only record failure if it's the Primary activity (to avoid log noise)
                 if not is_backup:
                     self.state.record_failure(activity, violation)
 
         if not valid_slots:
+            if should_log:
+                logger.debug(f"  -> Placement FAILED for '{activity.name}'. No valid slots found in {len(candidates)} candidates.")
             return False
 
         # 2. Pick Winner
         valid_slots.sort(key=lambda x: x[0], reverse=True)
         best_score, best_date, best_time = valid_slots[0]
+        logger.info(
+            f"  -> 🎉 PLACED '{activity.name}' at {best_date} {best_time} "
+            f"(Score: {best_score:.2f}, IsBackup: {is_backup})"
+        )
 
         # 3. Commit
         slot = TimeSlot(
