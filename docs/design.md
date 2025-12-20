@@ -122,23 +122,24 @@ class TimeSlot(BaseModel):
 ### `scheduler/engine.py`
 
 #### `run(self) -> SchedulerState`
+**Description:**  
+The main loop. Iterates through every day of the simulation, attempting to fill weekly quotas for all activities.
 
-**Description:** The main loop. Iterates through every day of the simulation, attempting to fill weekly quotas for all activities.
-
-* **Returns:** A fully populated `SchedulerState` object containing the schedule and failure logs.
+**Returns:**  
+A fully populated `SchedulerState` object containing the schedule and failure logs.
 
 #### `_schedule_on_day(self, activity: Activity, current_date: date, is_backup: bool = False) -> bool`
+**Description:**  
+Attempts to place a specific activity into a specific date.
 
-**Description:** Attempts to place a specific activity into a specific date.
+**Logic:**
+1. **Quota Check:** Checks Daily Load Quotas (to prevent burnout).
+2. **Candidate Generation:** Generates candidate time slots (Morning, Afternoon, Evening).
+3. **Validation:** Calls `ConstraintChecker` for each slot.
+4. **Commit:** If a valid slot is found, commits to `SchedulerState` and returns `True`.
 
-* **Logic:**
-1. Checks Daily Load Quotas (to prevent burnout).
-2. Generates candidate time slots (Morning, Afternoon, Evening).
-3. Calls `ConstraintChecker` for each slot.
-4. If a valid slot is found, commits to `SchedulerState` and returns `True`.
-
-
-* **Key Parameter:** `is_backup` (Boolean). When `True`, it signals the Constraint Checker to bypass strict location rules ("Diplomatic Immunity").
+**Key Parameters:**
+* `is_backup` (Boolean): When `True`, it signals the Constraint Checker to bypass strict location rules ("Diplomatic Immunity").
 
 ---
 
