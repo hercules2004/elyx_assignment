@@ -24,7 +24,6 @@ graph TD
 
 ```
 
----
 
 ## 1. Data Models (Schema & Enums)
 
@@ -34,12 +33,10 @@ The system relies on strict typing via **Pydantic Models** (`models.py`) to ensu
 
 | Model | Purpose | Key Fields | Allowed Values (Enums) |
 | --- | --- | --- | --- |
-| **Activity** | Represents a single task | `id`, `type`, `priority`, `frequency` | **Type:** `Fitness`, `Food`, `Medication`, `Therapy`, `Consultation`, `Other`<br>
-
-<br>**Frequency:** `Daily`, `Weekly`, `Monthly` |
-| **Specialist** | A human resource | `id`, `type`, `availability` | **Type:** `Trainer`, `Therapist`, `Doctor`, `Nutritionist` |
-| **TravelPeriod** | A context modifier | `location_type`, `remote_activities_only` | **Location Type:** `Home`, `Hotel`, `Remote` (Cabin/Camping) |
-| **Equipment** | A physical resource | `id`, `is_portable` | *Boolean Flag* (`True` = Portable, `False` = Fixed) |
+| **Activity** | Represents a single task | `id`, `type`, `priority`, `frequency` | **Types:** Fitness, Food, Medication, Therapy, Consultation.<br><br>**Frequency:** Daily, Weekly, Monthly. |
+| **Specialist** | A human resource | `id`, `type`, `availability` | **Types:** Trainer, Therapist, Doctor, Nutritionist. |
+| **TravelPeriod** | A context modifier | `location_type`, `remote_only` | **Locations:** Home, Hotel, Remote (Cabin/Camping). |
+| **Equipment** | A physical resource | `id`, `is_portable` | **Portable:** True (Mat, Bands) or False (Treadmill). |
 
 ### Validation Rules
 
@@ -59,8 +56,8 @@ The **`ScheduleState`** class is the single source of truth during the schedulin
 
 | Component | Type | Description | Why it matters |
 | --- | --- | --- | --- |
-| **`schedule`** | `Dict[Date, List[TimeSlot]]` | The master timeline. Maps every date to a list of booked slots. | This is the final output that the UI renders. |
-| **`daily_load`** | `Dict[Date, Dict[Priority, Int]]` | A heatmap tracking how many tasks of each priority are booked per day. | Used by the **Liquid Logic** to prevent burnout (e.g., "Max 2 High-Intensity tasks/day"). |
+| **`schedule`** | `Dict[Date, List[Slot]]` | The master timeline. Maps every date to a list of booked slots. | This is the final output that the UI renders. |
+| **`daily_load`** | `Dict[Date, LoadMap]` | A heatmap tracking how many tasks of each priority are booked per day. | Used by the **Liquid Logic** to prevent burnout (e.g., "Max 2 High-Intensity tasks/day"). |
 | **`weekly_counter`** | `Dict[ActivityID, Int]` | Tracks progress toward weekly quotas (e.g., "2/3 Gym Sessions"). | Allows tasks to "flow" to other days. If the counter isn't full, the task remains pending. |
 | **`failed_activities`** | `List[FailureLog]` | A forensic log of every rejected task. | **Critical for Trust.** Stores the exact reason (e.g., "Blocked by Travel") so the UI can explain it to the user. |
 | **`booked_slots`** | `List[TimeSlot]` | A flat list of all confirmed bookings. | Used for O(1) collision detection (Overlap checks). |
@@ -117,6 +114,3 @@ A critical architectural decision was how to handle **Travel Constraints**.
 * **Sanitization Loop:** A custom logic layer that sits *between* the LLM response and Pydantic validation. It auto-corrects common errors:
 * *Frequency Fix:* Converts hallucinated "Custom" patterns to "Weekly".
 * *Duration Fix:* Bumps impossible "2-minute" workouts to a minimum of 10 minutes.
-
-
-
