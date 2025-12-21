@@ -1,3 +1,7 @@
+Here is the updated `docs/evaluation.md` with the **Heuristic Scoring** analysis integrated into the "Impact of Design Choices" section.
+
+---
+
 # 🧪 Evaluation & Results Analysis
 
 This document provides a comprehensive analysis of the **Adaptive Health Allocator**'s performance. It details the quantitative metrics achieved during simulation, interprets their significance for real-world application, and dissects the architectural decisions that directly contributed to these results.
@@ -96,42 +100,18 @@ Our high success rates are not accidental. They are the direct result of four sp
 
 ### 4. Heuristic Scoring (The "Human" Element)
 
-* **The Problem:** A mathematically valid schedule can still be practically miserable (e.g., random times every day, erratic gaps, or fragmented focus).
-* **Our Solution:** We implemented a `SlotScorer` module that grades every potential slot on a 0-100 scale. Instead of a simple "fit/no-fit" check, this allows the engine to choose the *best* valid slot among many options.
-
-The scoring algorithm begins with a **Base Score of 50.0** and modifies it based on four key heuristics:
+* **The Problem:** A mathematically valid schedule can still be practically miserable (e.g., random times every day, erratic gaps).
+* **Our Solution:** We implemented a `SlotScorer` module that grades every potential slot on a 0-100 scale. It starts with a **Base Score of 50** and applies the following heuristics:
 
 | Component | Logic / Heuristic | Score Impact |
-| --- | --- | --- |
-| **1. Time Window Fidelity** | **Parabolic Curve:** We use a parabolic function to score how close a slot is to the *center* of the user's preferred window. <br>
+| :--- | :--- | :--- |
+| **1. Time Window Fidelity** | **Parabolic Curve:** We use a parabolic function to score how close a slot is to the *center* of the user's preferred window. <br><br>• *Formula:* `1.0 - 4.0 * ((pos - 0.5) ** 2)`<br><br>• This heavily favors the middle of the window while penalizing the edges. | **+0 to +20 pts** |
+| **2. Pattern Consistency** | **Habit Formation:** The engine checks historical data (`weekly_patterns`). <br><br>• If a task was scheduled on this specific weekday >2 times in the past, it gets a large bonus.<br><br>• This encourages routine formation (e.g., *always* Gym on Mondays). | **+5 to +10 pts** |
+| **3. Flow State (Clustering)** | **Fragmented vs. Blocked:** Evaluates the gap to adjacent tasks.<br><br>• **Reward:** If the gap is <15 mins, we assume "Batching" (efficient).<br><br>• **Penalty:** If the task creates an "island" in the middle of free time, we penalize it to preserve deep work blocks. | **+15 pts** (Batching)<br><br>**-5 pts** (Island) |
+| **4. Resilience Buffers** | **The "Goldilocks" Zone:** Analyzes the gap *before* the task starts.<br><br>• **Dangerous (<15m):** High penalty. Risk of cascading delays.<br><br>• **Ideal (15-45m):** Max reward. Perfect for travel/prep.<br><br>• **Neutral (>45m):** No impact. | **+10 pts** (Ideal)<br><br>**-10 pts** (Risky) |
 
-<br>• *Formula:*  <br>
+* **Impact:** This ensures the schedule is not just efficient, but **sustainable**. It prevents burnout by enforcing realistic breaks and encourages consistency through habit rewards.
 
-<br>• This heavily favors the middle of the window while penalizing the edges. | **+0 to +20 pts** |
-| **2. Pattern Consistency** | **Habit Formation:** The engine checks historical data (`weekly_patterns`). <br>
-
-<br>• If a task was scheduled on this specific weekday >2 times in the past, it gets a large bonus.<br>
-
-<br>• This encourages routine formation (e.g., *always* Gym on Mondays). | **+5 to +10 pts** |
-| **3. Flow State (Clustering)** | **Fragmented vs. Blocked:** Evaluates the gap to adjacent tasks.<br>
-
-<br>• **Reward:** If the gap is <15 mins, we assume "Batching" (efficient).<br>
-
-<br>• **Penalty:** If the task creates an "island" in the middle of free time, we penalize it to preserve deep work blocks. | **+15 pts** (Batching)<br>
-
-<br>**-5 pts** (Island) |
-| **4. Resilience Buffers** | **The "Goldilocks" Zone:** Analyzes the gap *before* the task starts.<br>
-
-<br>• **Dangerous (<15m):** High penalty. Risk of cascading delays.<br>
-
-<br>• **Ideal (15-45m):** Max reward. Perfect for travel/prep.<br>
-
-<br>• **Neutral (>45m):** No impact. | **+10 pts** (Ideal)<br>
-
-<br>**-10 pts** (Risky) |
-
-* **Note on Consecutive Days:** While not explicitly penalized in the *Scoring* module, the **Liquid Scheduler's** logic naturally spreads tasks out. If a high-intensity task (P1/P2) is booked today, the `daily_load` limit often prevents another high-intensity task tomorrow, indirectly preventing back-to-back burnout days.
-* **Impact:** This ensures the schedule is not just efficient, but **sustainable**. It prevents burnout by enforcing realistic breaks (The "Goldilocks" Buffer) and minimizes mental load by encouraging consistency (Habit Formation).
 ---
 
 ## 📉 Failure Analysis (Forensics)
