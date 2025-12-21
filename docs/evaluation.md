@@ -1,7 +1,3 @@
-Here is the updated `docs/evaluation.md` with the **Heuristic Scoring** analysis integrated into the "Impact of Design Choices" section.
-
----
-
 # 🧪 Evaluation & Results Analysis
 
 This document provides a comprehensive analysis of the **Adaptive Health Allocator**'s performance. It details the quantitative metrics achieved during simulation, interprets their significance for real-world application, and dissects the architectural decisions that directly contributed to these results.
