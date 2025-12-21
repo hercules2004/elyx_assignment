@@ -91,17 +91,23 @@ export default function ResilientHealthDashboard() {
 
     if (wasReplacedByBackupToday) {
       category = "replaced"
+    } else if (scheduledDatesMap.has(failure.activity_id)) {
+      // Find the closest scheduled date (past or future)
+      const dates = scheduledDatesMap.get(failure.activity_id)!
+      const targetTime = new Date(dateKey).getTime()
+
+      const closestDate = dates.reduce((best, current) => {
+        const bestDiff = Math.abs(new Date(best).getTime() - targetTime)
+        const currDiff = Math.abs(new Date(current).getTime() - targetTime)
+        return currDiff < bestDiff ? current : best
+      }, dates[0])
+
+      if (closestDate) {
+        category = "rescheduled"
+        rescheduledTo = closestDate
+      }
     } else if (failure.type === "Travel") {
       category = "skipped"
-    } else if (scheduledDatesMap.has(failure.activity_id)) {
-      // Find the first scheduled date that is AFTER the current date
-      const dates = scheduledDatesMap.get(failure.activity_id)!.sort()
-      const nextDate = dates.find((d) => d > dateKey)
-      
-      if (nextDate) {
-        category = "rescheduled"
-        rescheduledTo = nextDate
-      }
     }
 
     uniqueFailuresMap.set(failure.activity_id, {
