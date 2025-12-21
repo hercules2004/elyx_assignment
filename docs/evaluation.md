@@ -59,7 +59,7 @@ The 64% completion rate for P5 tasks is a **feature, not a bug**.
 
 ## 🛠️ Impact of Design Choices
 
-Our high success rates are not accidental. They are the direct result of three specific architectural interventions.
+Our high success rates are not accidental. They are the direct result of four specific architectural interventions.
 
 ### 1. Liquid Scheduling vs. Gridlock
 
@@ -94,6 +94,44 @@ Our high success rates are not accidental. They are the direct result of three s
 
 * **Impact:** This creates a "Protected Lane" for Critical tasks. Even if there are 50 P5 tasks waiting, they are physically prevented from booking more than 40% of the day, leaving the remaining 60% wide open for P1/P2 tasks to slot in guaranteed.
 
+### 4. Heuristic Scoring (The "Human" Element)
+
+* **The Problem:** A mathematically valid schedule can still be practically miserable (e.g., random times every day, erratic gaps, or fragmented focus).
+* **Our Solution:** We implemented a `SlotScorer` module that grades every potential slot on a 0-100 scale. Instead of a simple "fit/no-fit" check, this allows the engine to choose the *best* valid slot among many options.
+
+The scoring algorithm begins with a **Base Score of 50.0** and modifies it based on four key heuristics:
+
+| Component | Logic / Heuristic | Score Impact |
+| --- | --- | --- |
+| **1. Time Window Fidelity** | **Parabolic Curve:** We use a parabolic function to score how close a slot is to the *center* of the user's preferred window. <br>
+
+<br>• *Formula:*  <br>
+
+<br>• This heavily favors the middle of the window while penalizing the edges. | **+0 to +20 pts** |
+| **2. Pattern Consistency** | **Habit Formation:** The engine checks historical data (`weekly_patterns`). <br>
+
+<br>• If a task was scheduled on this specific weekday >2 times in the past, it gets a large bonus.<br>
+
+<br>• This encourages routine formation (e.g., *always* Gym on Mondays). | **+5 to +10 pts** |
+| **3. Flow State (Clustering)** | **Fragmented vs. Blocked:** Evaluates the gap to adjacent tasks.<br>
+
+<br>• **Reward:** If the gap is <15 mins, we assume "Batching" (efficient).<br>
+
+<br>• **Penalty:** If the task creates an "island" in the middle of free time, we penalize it to preserve deep work blocks. | **+15 pts** (Batching)<br>
+
+<br>**-5 pts** (Island) |
+| **4. Resilience Buffers** | **The "Goldilocks" Zone:** Analyzes the gap *before* the task starts.<br>
+
+<br>• **Dangerous (<15m):** High penalty. Risk of cascading delays.<br>
+
+<br>• **Ideal (15-45m):** Max reward. Perfect for travel/prep.<br>
+
+<br>• **Neutral (>45m):** No impact. | **+10 pts** (Ideal)<br>
+
+<br>**-10 pts** (Risky) |
+
+* **Note on Consecutive Days:** While not explicitly penalized in the *Scoring* module, the **Liquid Scheduler's** logic naturally spreads tasks out. If a high-intensity task (P1/P2) is booked today, the `daily_load` limit often prevents another high-intensity task tomorrow, indirectly preventing back-to-back burnout days.
+* **Impact:** This ensures the schedule is not just efficient, but **sustainable**. It prevents burnout by enforcing realistic breaks (The "Goldilocks" Buffer) and minimizes mental load by encouraging consistency (Habit Formation).
 ---
 
 ## 📉 Failure Analysis (Forensics)
@@ -115,4 +153,4 @@ Despite high success, failures still occur. Understanding *why* is key to trust.
 
 ## 🔮 Conclusion
 
-The results validate that **Adaptability > Rigidity**. By treating the schedule as a negotiable surface rather than a fixed grid, the **Adaptive Health Allocator** achieves superior adherence rates. The combination of **Liquid Quotas** (Time Flexibility) and **Backup Chains** (Method Flexibility) creates a system that bends but does not break.
+The results validate that **Adaptability > Rigidity**. By treating the schedule as a negotiable surface rather than a fixed grid, the **Adaptive Health Allocator** achieves superior adherence rates. The combination of **Liquid Quotas** (Time Flexibility), **Backup Chains** (Method Flexibility), and **Heuristic Scoring** (Human-Centric Design) creates a system that bends but does not break.
