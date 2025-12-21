@@ -56,7 +56,7 @@ python run_scheduler.py
 ### 4. Launch the Dashboard (The UI)
 
 ```bash
-cd frontend
+cd health-dashboard-ui
 npm install
 npm run dev
 
