@@ -124,9 +124,9 @@ The system uses a **3-Stage Pipeline** to transform vague goals into specific ti
 
 For detailed engineering breakdowns, see the `docs/` folder:
 
-* **[🏛️ System Architecture](https://www.google.com/search?q=./docs/architecture.md)** - Diagram of the Data Factory, Engine, and State Manager.
-* **[📐 Low-Level Design](https://www.google.com/search?q=./docs/system_design.md)** - Class diagrams, Pydantic models, and method signatures.
-* **[🧪 Evaluation & Testing](https://www.google.com/search?q=./docs/evaluation.md)** - Failure analysis logs and resilience metrics breakdown.
+* **[🏛️ System Architecture](docs/architecture.md)** - Diagram of the Data Factory, Engine, and State Manager.
+* **[📐 Low-Level Design](docs/design.md)** - Class diagrams, Pydantic models, and method signatures.
+* **[🧪 Evaluation & Testing](docs/evaluation.md)** - Failure analysis logs and resilience metrics breakdown.
 
 ---
 
