@@ -1,10 +1,10 @@
 # 📐 Low-Level System Design
 
-This document details the software specifications for the **Adaptive Health Allocator**. It covers the class structures, method signatures, and the exact Pydantic schemas used to enforce data integrity.
+This document details the software specifications for the **Adaptive Health Allocator**. It covers the class structures, method signatures, and the exact logic flows used to enforce data integrity and schedule generation.
 
 ---
 
-## 1. Class Diagrams
+## 1. Class Diagrams & Data Models
 
 The system follows a strict Object-Oriented Design (OOD) where the `AdaptiveScheduler` acts as the orchestrator for `Activity` objects, validated by the `ConstraintChecker`.
 
@@ -53,13 +53,11 @@ classDiagram
 
 ```
 
----
-
-## 2. Pydantic Models (The Schema)
+### 2. Pydantic Models (The Schema)
 
 We use **Pydantic V2** for strict data validation. These models are the "contract" between the Generative AI layer and the Scheduling Engine.
 
-### A. The `Activity` Model
+#### A. The `Activity` Model
 
 Represents a single task unit.
 
@@ -88,7 +86,7 @@ class Activity(BaseModel):
 
 ```
 
-### B. The `Frequency` Model
+#### B. The `Frequency` Model
 
 Defines how often a task should occur.
 
@@ -100,7 +98,7 @@ class Frequency(BaseModel):
 
 ```
 
-### C. The `TimeSlot` Model
+#### C. The `TimeSlot` Model
 
 Represents a finalized booking in the schedule.
 
@@ -115,69 +113,87 @@ class TimeSlot(BaseModel):
 
 ```
 
----
-
-## 3. Method Signatures (The Logic)
-
-### `scheduler/engine.py`
-
-#### `run(self) -> SchedulerState`
-**Description:**  
-The main loop. Iterates through every day of the simulation, attempting to fill weekly quotas for all activities.
-
-**Returns:**  
-A fully populated `SchedulerState` object containing the schedule and failure logs.
-
-#### `_schedule_on_day(self, activity: Activity, current_date: date, is_backup: bool = False) -> bool`
-**Description:**  
-Attempts to place a specific activity into a specific date.
-
-**Logic:**
-1. **Quota Check:** Checks Daily Load Quotas (to prevent burnout).
-2. **Candidate Generation:** Generates candidate time slots (Morning, Afternoon, Evening).
-3. **Validation:** Calls `ConstraintChecker` for each slot.
-4. **Commit:** If a valid slot is found, commits to `SchedulerState` and returns `True`.
-
-**Key Parameters:**
-* `is_backup` (Boolean): When `True`, it signals the Constraint Checker to bypass strict location rules ("Diplomatic Immunity").
-
----
-
-### `scheduler/constraints.py`
-
-#### `check_time_slot(self, activity, date, time, booked_slots, is_backup) -> Optional[ConstraintViolation]`
-
-**Description:** Validates if an activity can physically happen.
-
-* **Returns:** `None` if valid, or a `ConstraintViolation` object with a reason string.
-* **Logic:**
-* **Travel Check:** If `is_backup=True`, **IGNORE** location mismatch. Else, fail if user is at `Hotel` and activity is `Home`.
-* **Overlap Check:** scan `booked_slots` to ensure no time conflicts.
-* **Resource Check:** Ensure equipment is available (or portable).
 
 
 
 ---
 
-## 4. Helper Structures
+## 3. The Adaptive Orchestrator (The "Engine")
 
-### `SchedulerState` (State Management)
+**Role:** The "Conductor" of the orchestra.
 
-Tracks the cumulative progress of the schedule.
+Located in `scheduler/engine.py`, the `AdaptiveScheduler` implements a **Heuristic-Based Greedy Solver**. It does not check every infinite possibility; instead, it sorts tasks by difficulty and places them using a "Best Fit" strategy.
 
-* **`weekly_counter`**: `Dict[str, int]` - Tracks how many times an activity has occurred this week. Used to determine if a task is "done" for the week.
-* **`daily_load`**: `Dict[date, Dict[int, int]]` - Tracks the number of P1, P2... P5 tasks scheduled on a given day. Used to cap intensity.
+### High-Level Architecture
 
-### `ConstraintViolation` (Error Handling)
+The Engine coordinates three components:
 
-A structured error object used for forensic logging.
+1. **The Police (`ConstraintChecker`):** Enforces hard rules (Physics/Reality).
+2. **The Judge (`SlotScorer`):** Enforces soft rules (Preferences/Burnout).
+3. **The Memory (`SchedulerState`):** Tracks bookings and failures.
 
-```python
-@dataclass
-class ConstraintViolation:
-    constraint_type: str  # "Travel", "Overlap", "Capacity"
-    reason: str           # Human-readable message
-    activity_id: str
-    date: date
+### The Execution Pipeline (`run`)
+
+The scheduling process follows a strict "Fail Fast, Fail Safe" pipeline:
+
+```mermaid
+flowchart TD
+    Start([Start Run]) --> Expand[1. Expand Demand]
+    Expand --> Sort[2. Sort by Difficulty<br>High Priority First]
+    Sort --> Loop{For Each Task}
+    
+    Loop -- Done --> Finish([Return State])
+    Loop -- Next Task --> Attempt1[Tier 1: Primary Placement<br>Scope: Narrow]
+    
+    Attempt1 -- Success --> Commit[Commit to State]
+    Attempt1 -- Fail --> CheckBackup{Has Backup?}
+    
+    CheckBackup -- Yes --> Attempt2[Tier 2: Backup Chain<br>Is_Backup=True]
+    CheckBackup -- No --> CheckLiquid{Is Flexible?}
+    
+    Attempt2 -- Success --> Commit
+    Attempt2 -- Fail --> CheckLiquid
+    
+    CheckLiquid -- Yes (Weekly/Monthly) --> Attempt3[Tier 3: Liquid Scheduling<br>Scope: Wide]
+    CheckLiquid -- No (Daily/Fixed) --> FailNode
+    
+    Attempt3 -- Success --> Commit
+    Attempt3 -- Fail --> FailNode[Log 'Exhaustion' Failure]
+    
+    Commit --> Loop
+    FailNode --> Loop
+    
+    style Attempt1 fill:#d4f1f4,stroke:#189ab4
+    style Attempt2 fill:#ffebcc,stroke:#ff9900
+    style Attempt3 fill:#e6ccff,stroke:#6600cc
+    style FailNode fill:#ffcccc,stroke:#cc0000
 
 ```
+
+### The Decision Core (`_attempt_placement`)
+
+This logic determines the fate of a single task instance.
+
+```mermaid
+flowchart TD
+    Start([Attempt Placement]) --> Gen[Generate Candidates]
+    Gen --> CandidateLoop{Loop Candidates}
+    
+    CandidateLoop -- No Candidates Left --> CheckValid{Any Valid Slots?}
+    CandidateLoop -- Next (Date, Time) --> Quota{Quota Check?}
+    
+    Quota -- Full (Burnout) --> CandidateLoop
+    Quota -- OK --> Hard{"Hard Constraints<br>(Checker)"}
+    
+    Hard -- Violation --> CandidateLoop
+    Hard -- Valid --> Soft["Soft Scoring<br>(Scorer)"]
+    
+    Soft --> Save[Add to Valid List] --> CandidateLoop
+    
+    CheckValid -- No --> ReturnFalse([Return False])
+    CheckValid -- Yes --> SortValid[Sort by Score]
+    SortValid --> PickBest[Pick Top Candidate]
+    PickBest --> Commit[State.add_booking()] --> ReturnTrue([Return True])
+
+```
+
