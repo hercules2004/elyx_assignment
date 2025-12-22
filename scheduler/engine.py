@@ -371,10 +371,14 @@ class AdaptiveScheduler:
             # We try 3 slots per day to keep search space manageable
             standard_options = [
                 (7, 0),   # Early Morning
+                (8,0),
                 (9, 0),   # Start of Work
                 (12, 0),  # Lunch
+                (13,0),
+                (16,0),
                 (17, 0),  # After Work
                 (19, 0),  # Evening
+                (20,0),
                 (22,0) # Post-Dinner
             ]
             
