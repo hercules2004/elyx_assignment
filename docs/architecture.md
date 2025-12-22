@@ -87,20 +87,143 @@ When a high-priority task is blocked, the engine triggers a **Resilience Loop**:
 
 ---
 
+Here is a comprehensive breakdown of the Constraint Validation logic, including flowcharts to visualize the decision-making process.
+
+---
+
 ## 4. Constraint Validation (Guardrails)
 
-**Role:** The "Law" that enforces physical reality.
+**Role:** The "Gatekeeper" that enforces physical reality.
 
-Located in `scheduler/constraints.py`, this module answers a binary question: *"Can Activity X happen at Time Y?"*
+Located in `scheduler/constraints.py`, this module does not care about user preferences. It answers a binary question: *"Is it physically possible for Activity X to happen at Time Y?"*
 
-### The "Diplomatic Immunity" Pattern
+It uses a **"Fail Fast" Hierarchy**. It runs the cheapest and most restrictive checks first (like "Are you in another country?") before running expensive or granular checks (like "Do you have a 15-minute gap?").
 
-A critical architectural decision was how to handle **Travel Constraints**.
+### 1. The Master Validation Pipeline (`check_time_slot`)
 
-* **Standard Rule:** If User is at a `Hotel` or `Remote Cabin`, block all `Location: Home` activities.
-* **The Problem:** This blocked Backup activities (like "Home Yoga") which are technically portable.
-* **The Solution:** The Constraint Checker grants **Diplomatic Immunity** to any activity flagged as `is_backup=True`. It bypasses the location check, assuming backups are low-friction and portable by design.
+This is the main entry point. Every single potential slot must survive this gauntlet to be considered valid.
 
+```mermaid
+flowchart TD
+    Start([Start Check]) --> Travel{1. Travel Context}
+    
+    Travel -- Violation --> Fail([Return Violation])
+    Travel -- Pass --> Specialist{2. Specialist Available?}
+    
+    Specialist -- Not Working --> Fail
+    Specialist -- Pass --> Equipment{3. Equipment Check}
+    
+    Equipment -- Missing/Broken --> Fail
+    Equipment -- Pass --> Overlap{4. Time Overlap}
+    
+    Overlap -- Collision --> Fail
+    Overlap -- Pass --> Window{5. Time Window}
+    
+    Window -- Too Early/Late --> Fail
+    Window -- Pass --> Success([✅ VALID SLOT])
+    
+    style Fail fill:#ffcccc,stroke:#333,stroke-width:2px
+    style Success fill:#9f9,stroke:#333,stroke-width:2px
+
+```
+
+---
+
+### 2. Deep Dive: Travel & Location Logic (`_check_travel_context`)
+
+This is the most complex logic block. It determines if a task can be performed given the user's current geographic location. This is where the **"Diplomatic Immunity"** pattern and **"Smart Portability"** inference happen.
+
+#### The Logic Flow
+
+1. **Am I traveling?** If no, skip everything.
+2. **Diplomatic Immunity:** If this is a `Backup` activity (e.g., "Hotel Room Workout"), we **assume** it is portable and bypass location checks.
+3. **Portability Inference:** If the activity isn't explicitly marked "Remote," the system checks the equipment. If you only need a *Yoga Mat* (Portable: Yes), the system infers the activity is effectively remote.
+4. **Location Enforcement:** If the trip is "Remote Cabin" (Nature only), it bans tech-heavy tasks. If the trip is "Hotel," it bans "Home-only" tasks.
+
+```mermaid
+flowchart TD
+    Start([Check Travel]) --> IsTraveling{Is User Traveling?}
+    
+    IsTraveling -- No --> Pass([✅ Pass])
+    IsTraveling -- Yes --> IsBackup{Is Backup Activity?}
+    
+    IsBackup -- Yes (Immunity) --> Pass
+    IsBackup -- No --> CheckRemote{Is Remote Capable?}
+    
+    CheckRemote -- Yes --> RemoteType{Trip Type}
+    CheckRemote -- No --> CheckEquip{All Equipment Portable?}
+    
+    CheckEquip -- Yes (Inferred Remote) --> RemoteType
+    CheckEquip -- No --> Fail([❌ Fail: Not Portable])
+    
+    RemoteType -- Remote Trip (Nature) --> CheckNature{Is Remote Only?}
+    RemoteType -- City Trip --> CheckHome{Location == Home?}
+    
+    CheckNature -- Activity is Digital --> Fail([❌ Fail: Trip is Detox])
+    CheckNature -- Activity is Remote --> Pass
+    
+    CheckHome -- Yes --> Fail([❌ Fail: Activity stuck at Home])
+    CheckHome -- No --> Pass
+
+```
+
+---
+
+### 3. Deep Dive: Equipment & Hotel Gyms (`_check_equipment`)
+
+This logic solves the "Hotel Gym" problem. Just because you are traveling doesn't mean you can't use a treadmill—you just need to use the *Hotel's* treadmill.
+
+#### The Logic Flow
+
+1. **Iterate Equipment:** Check every item needed (e.g., Treadmill, Weights).
+2. **Context Check:** Are we at Home or Traveling?
+* **If Home:** Is the machine broken (Maintenance)? Is it full (Concurrency)?
+* **If Traveling:** Is the item portable? OR Does the Hotel provide it?
+
+
+
+```mermaid
+flowchart TD
+    Start([Check Equipment]) --> Loop{For Each Item}
+    
+    Loop -- Done --> Pass([✅ Pass])
+    Loop -- Next Item --> Context{Traveling?}
+    
+    Context -- No (Home) --> Maint{Under Maintenance?}
+    Maint -- Yes --> Fail([❌ Fail: Broken])
+    Maint -- No --> Usage{Too Many Users?}
+    Usage -- Yes --> Fail([❌ Fail: Full])
+    Usage -- No --> Loop
+    
+    Context -- Yes (Travel) --> Portable{Is Portable?}
+    Portable -- Yes --> Loop
+    Portable -- No --> Hotel{Available at Destination?}
+    
+    Hotel -- Yes (Hotel Gym) --> Loop
+    Hotel -- No --> Fail([❌ Fail: Missing Resource])
+
+```
+
+---
+
+### 4. Deep Dive: Time Overlap with Prep Time (`_check_overlap`)
+
+The standard scheduler mistake is checking `Start` vs `End`. This system implements **"Effective Time"** blocking.
+
+If a task starts at **10:00 AM** but requires **15 mins prep/travel**, the system views the "Effective Start" as **9:45 AM**.
+
+**The Logic:**
+The system calculates a collision if:
+
+$$
+(\text{New.Start} - \text{New.Prep}) < (\text{Old.End}) \quad \text{AND} \quad (\text{Old.Start} - \text{Old.Prep}) < (\text{New.End})
+$$
+
+**Visual Representation:**
+
+* **Scenario:** You try to book a "Zoom Call" at 9:45 AM.
+* **Conflict:** Even though the Gym starts at 10:00 AM, the time 9:45 AM is blocked by "Driving to Gym."
+* **Result:** `ConstraintViolation: Overlap`.
 ---
 
 ## 5. The Data Factory Layer (Generators)
