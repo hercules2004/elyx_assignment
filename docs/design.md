@@ -163,10 +163,10 @@ flowchart TD
     Commit --> Loop
     FailNode --> Loop
     
-    style Attempt1 fill:#d4f1f4,stroke:#189ab4
-    style Attempt2 fill:#ffebcc,stroke:#ff9900
-    style Attempt3 fill:#e6ccff,stroke:#6600cc
-    style FailNode fill:#ffcccc,stroke:#cc0000
+    style Attempt1 fill:#ffffff,stroke:#189ab4
+    style Attempt2 fill:#ffffff,stroke:#ff9900
+    style Attempt3 fill:#ffffff,stroke:#6600cc
+    style FailNode fill:#ffffff,stroke:#cc0000
 
 ```
 
@@ -193,7 +193,7 @@ flowchart TD
     CheckValid -- No --> ReturnFalse([Return False])
     CheckValid -- Yes --> SortValid[Sort by Score]
     SortValid --> PickBest[Pick Top Candidate]
-    PickBest --> Commit[State.add_booking()] --> ReturnTrue([Return True])
+    PickBest --> Commit[State.add_booking] --> ReturnTrue([Return True])
 
 ```
 
