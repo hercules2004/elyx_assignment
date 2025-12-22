@@ -46,22 +46,79 @@ The system relies on strict typing via **Pydantic Models** (`models.py`) to ensu
 
 ---
 
+Here is the updated and comprehensive documentation for the **State Management** module, reflecting the new capabilities of the `SchedulerState` class.
+
+---
+
 ## 2. State Management (The "Memory")
 
 **Role:** The "Ledger" that tracks truth.
 
-The **`ScheduleState`** class is the single source of truth during the scheduling run. It is mutable and evolves as the engine iterates through days. It captures not just *what happened*, but *why* things failed.
+The **`SchedulerState`** class acts as the Central Nervous System of the scheduler. It is the single source of truth that evolves as the engine runs. It has been significantly upgraded from a simple "list of bookings" to an **Analytical Engine** that tracks not just *what* happened, but *how* (Resilience) and *why* (Diagnostics).
 
-### State Components Table
+### 1. The Data Model (Storage)
 
-| Component | Type | Description | Why it matters |
+The state uses optimized indices to ensure the scheduler remains fast ( lookups) even as the calendar fills up.
+
+| Component | Type | Description | Strategic Value |
 | --- | --- | --- | --- |
-| **`schedule`** | `Dict[Date, List[Slot]]` | The master timeline. Maps every date to a list of booked slots. | This is the final output that the UI renders. |
-| **`daily_load`** | `Dict[Date, LoadMap]` | A heatmap tracking how many tasks of each priority are booked per day. | Used by the **Liquid Logic** to prevent burnout (e.g., "Max 2 High-Intensity tasks/day"). |
-| **`weekly_counter`** | `Dict[ActivityID, Int]` | Tracks progress toward weekly quotas (e.g., "2/3 Gym Sessions"). | Allows tasks to "flow" to other days. If the counter isn't full, the task remains pending. |
-| **`failed_activities`** | `List[FailureLog]` | A forensic log of every rejected task. | **Critical for Trust.** Stores the exact reason (e.g., "Blocked by Travel") so the UI can explain it to the user. |
-| **`booked_slots`** | `List[TimeSlot]` | A flat list of all confirmed bookings. | Used for O(1) collision detection (Overlap checks). |
+| **`booked_slots`** | `List[TimeSlot]` | The master ledger of every confirmed appointment. | The raw data for the final schedule. |
+| **`specialist_bookings`** | `Dict[ID, List[Slot]]` | A lookup index for doctors/therapists. | **Speed.** Allows the `ConstraintChecker` to instantly know if "Dr. Smith" is busy without scanning the whole calendar. |
+| **`equipment_bookings`** | `Dict[ID, List[Slot]]` | A lookup index for machines (Gym, Dialysis). | **Concurrency.** Tracks usage to enforce limits (e.g., "Only 1 user per Treadmill"). |
+| **`activity_occurrences`** | `Dict[ID, Int]` | Tracks how many times an activity has been booked. | **Quota Tracking.** Ensures we hit the target (e.g., "3/3 Gym Sessions"). |
+| **`backup_activations`** | `Dict[ID, List[Slot]]` | Maps Primary Activity IDs to their Backup replacements. | **Resilience Metrics.** Allows the system to report: *"You used your fallback plan 15% of the time."* |
+| **`failed_activities`** | `Dict[ID, Attempt]` | A forensic log of aggregated failure reasons. | **Diagnostics.** Stores exactly why a task failed (e.g., "50 attempts blocked by Travel"). |
 
+
+### 2. Functional API (Methods)
+
+The class provides a strict interface for modifying and querying the state.
+
+#### **State Mutation (Writing)**
+
+| Method | Role | Logic & Side Effects |
+| --- | --- | --- |
+| **`add_booking(slot)`** | **The "Commit"** | • Adds slot to `booked_slots`.<br>
+
+<br>• Immediately updates `specialist` and `equipment` indices.<br>
+
+<br>• Increments `activity_occurrences`.<br>
+
+<br>• If `slot.is_backup`, logs it in `backup_activations` for resilience tracking. |
+| **`record_failure(act, viol)`** | **The "Error Log"** | • Does **not** store every single failed check (too noisy).<br>
+
+<br>• Aggregates failures into `SchedulingAttempt` objects.<br>
+
+<br>• Stores the specific `ConstraintViolation` so we can later distinguish between "Gym Full" vs. "User Traveling". |
+| **`clear()`** | **The "Reset"** | • Wipes all lists and counters.<br>
+
+<br>• Useful for testing or if the scheduler needs to restart a phase. |
+
+#### **State Querying (Reading)**
+
+| Method | Role | Logic |
+| --- | --- | --- |
+| **`get_slots_for_date(date)`** | **Daily View** | Returns all slots for a specific day. Used by the Scorer to calculate "Clustering" (batching tasks). |
+| **`get_occurrence_count(id)`** | **Progress Check** | Simple integer lookup to check if an activity has met its frequency goal. |
+| **`get_statistics()`** | **The "Dashboard"** | **Complex Analytics.** Generates the final report:<br>
+
+<br>• **Resilience Rate:** `(Backup / Total) * 100`.<br>
+
+<br>• **Priority Breakdown:** Success rates per priority tier (P1 vs P5).<br>
+
+<br>• **Utilization:** Counts of resource usage. |
+| **`get_failure_report()`** | **The "Post-Mortem"** | **Smart Filtering.**<br>
+
+<br>• Filters out "noise" failures (e.g., initial failures that were later fixed by a backup).<br>
+
+<br>• Returns only **Terminal Failures** (Exhaustion) to explain "Missed Opportunities" to the user. |
+
+### 3. Visualizing State Flow
+
+1. **Solver** finds a valid candidate.
+2. **Commit:** Calls `add_booking`. Indices update instantly.
+3. **Conflict Check (Next Task):** The next task queries `specialist_bookings` and sees the new block immediately.
+4. **Reporting:** At the end of the run, `get_statistics` pulls from `backup_activations` to calculate how "resilient" the user's plan is.
 ---
 
 ## 3. The Adaptive Engine Layer (Scheduler)
@@ -84,10 +141,6 @@ When a high-priority task is blocked, the engine triggers a **Resilience Loop**:
 2. **Failure Detection:** Blocked by "Travel (Remote Cabin)".
 3. **Immediate Swap:** The engine retrieves the linked **Backup Activity** ("Bodyweight Flow").
 4. **Diplomatic Immunity:** The backup is scheduled *immediately* on the same day, counting towards the Primary's weekly quota.
-
----
-
-Here is a comprehensive breakdown of the Constraint Validation logic, including flowcharts to visualize the decision-making process.
 
 ---
 
