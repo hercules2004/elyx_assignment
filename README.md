@@ -155,7 +155,7 @@ The frontend is designed to be forgiving and transparent, removing the guilt ass
 
 3. **The "Pyramid" Distribution:**
 * *Problem:* High-priority tasks monopolized the calendar, leaving 0% room for hobbies (P5).
-* *Solution:* Adjusted Data Generation to enforce a 10/20/40/30 split across priority tiers to ensure realistic load balancing.
+* *Solution:* Adjusted Data Generation to ensure realistic load balancing.
 
 
 
