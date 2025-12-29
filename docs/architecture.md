@@ -20,7 +20,7 @@ graph TD
     I -->|Swap to Backup| H
     
     H -->|Final State| J(Presentation Layer)
-    J -->|JSON Export| K[React Dashboard]
+    J -->|JSON Export| K[Dashboard]
 
 ```
 
@@ -42,10 +42,6 @@ The system relies on strict typing via **Pydantic Models** (`models.py`) to ensu
 * **Priority:** Integer `1` (Critical) to `5` (Optional).
 * **Duration:** Minimum `10` minutes.
 * **Backup Link:** `backup_activity_ids` must reference a valid Activity ID in the same generation batch.
-
----
-
-Here is the updated and comprehensive documentation for the **State Management** module, reflecting the new capabilities of the `SchedulerState` class.
 
 ---
 
